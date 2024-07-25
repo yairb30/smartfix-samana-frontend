@@ -1,0 +1,81 @@
+<div class="container mt-5">
+  <h2>Lista de Celulares</h2>
+  <button class="btn btn-primary mb-3" (click)="add()">
+    Agregar Celular
+  </button>
+  <input
+    type="text"
+    class="form-control mb-3"
+    placeholder="Buscar Celular"
+  />
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let celular of celulares">
+        <td>{{ celular.id }}</td>
+        <td *ngIf="!selectedCelular || selectedCelular.id !== celular.id">
+          {{ celular.marca }}
+        </td>
+        <td *ngIf="selectedCelular && selectedCelular.id === celular.id">
+          <input [(ngModel)]="selectedCelular.marca" class="form-control" />
+        </td>
+
+        <td *ngIf="!selectedCelular || selectedCelular.id !== celular.id">
+          {{ celular.modelo }}
+        </td>
+        <td *ngIf="selectedCelular && selectedCelular.id === celular.id">
+          <input [(ngModel)]="selectedCelular.modelo" class="form-control" />
+        </td>
+
+        <td>
+          <button
+            *ngIf="!selectedCelular || selectedCelular.id !== celular.id"
+            class="btn btn-primary btn-sm btn-edit"
+            (click)="edit(celular)"
+          >
+            Editar
+          </button>
+          <button
+            *ngIf="selectedCelular && selectedCelular.id === celular.id"
+            class="btn btn-success btn-sm btn-save"
+            (click)="save()"
+          >
+            Guardar
+          </button>
+          <button
+            *ngIf="selectedCelular && selectedCelular.id === celular.id"
+            class="btn btn-secondary btn-sm btn-cancel"
+            (click)="cancel()"
+          >
+            Cancelar
+          </button>
+          <button class="btn btn-danger btn-sm btn-delete" (click)="delete(celular.id)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="isAdding">
+        <td></td>
+        <td><input [(ngModel)]="newCelular.marca" class="form-control" /></td>
+        <td>
+          <input [(ngModel)]="newCelular.modelo" class="form-control" />
+        </td>
+        <td>
+          <button class="btn btn-success btn-sm btn-save" (click)="save()">
+            Guardar
+          </button>
+          <button class="btn btn-secondary btn-sm btn-cancel" (click)="cancel()">
+            Cancelar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,204 @@
+<!-- src/app/reparaciones/reparaciones.component.html -->
+<div class="container mt-5">
+  <h2>Lista de Reparaciones</h2>
+  <button class="btn btn-primary mb-3" (click)="add()">
+    Agregar Reparación
+  </button>
+  <input
+    type="text"
+    class="form-control mb-3"
+    placeholder="Buscar Reparación"
+  />
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>Celular</th>
+        <th>Problema</th>
+        <th>Estado</th>
+        <th>Fecha de Ingreso</th>
+        <th>Fecha Estimada de Entrega</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reparacion of reparaciones">
+        <td>{{ reparacion.id }}</td>
+        <td
+          *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
+        >
+          {{ getCliente(reparacion.clienteId) }}
+        </td>
+        <td
+          *ngIf="selectedReparacion && selectedReparacion.id === reparacion.id"
+        >
+          <select
+            [(ngModel)]="selectedReparacion.clienteId"
+            class="form-control"
+          >
+            <option *ngFor="let cliente of clientes" [value]="cliente.id">
+              {{ cliente.nombre }} {{ cliente.apellido }}
+              {{ cliente.telefono }} {{ cliente.email }}
+            </option>
+          </select>
+        </td>
+
+        <td
+          *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
+        >
+          {{ getCelular(reparacion.celularId) }}
+        </td>
+        <td
+          *ngIf="selectedReparacion && selectedReparacion.id === reparacion.id"
+        >
+          <select
+            [(ngModel)]="selectedReparacion.celularId"
+            class="form-control"
+          >
+            <option *ngFor="let celular of celulares" [value]="celular.id">
+              {{ celular.marca }} {{ celular.modelo }}
+            </option>
+          </select>
+        </td>
+
+        <td
+          *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
+        >
+          {{ reparacion.problema }}
+        </td>
+        <td
+          *ngIf="selectedReparacion && selectedReparacion.id === reparacion.id"
+        >
+          <input
+            [(ngModel)]="selectedReparacion.problema"
+            class="form-control"
+          />
+        </td>
+
+        <td
+          *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
+        >
+          {{ reparacion.estado }}
+        </td>
+        <td
+          *ngIf="selectedReparacion && selectedReparacion.id === reparacion.id"
+        >
+          <input [(ngModel)]="selectedReparacion.estado" class="form-control" />
+        </td>
+
+        <td
+          *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
+        >
+          {{ reparacion.fechaIngreso }}
+        </td>
+        <td
+          *ngIf="selectedReparacion && selectedReparacion.id === reparacion.id"
+        >
+          <input
+            [(ngModel)]="selectedReparacion.fechaIngreso"
+            type="date"
+            class="form-control"
+          />
+        </td>
+
+        <td
+          *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
+        >
+          {{ reparacion.fechaEstimadaEntrega }}
+        </td>
+        <td
+          *ngIf="selectedReparacion && selectedReparacion.id === reparacion.id"
+        >
+          <input
+            [(ngModel)]="selectedReparacion.fechaEstimadaEntrega"
+            type="date"
+            class="form-control"
+          />
+        </td>
+
+        <td>
+          <button
+            *ngIf="
+              !selectedReparacion || selectedReparacion.id !== reparacion.id
+            "
+            class="btn btn-primary btn-sm btn-edit"
+            (click)="edit(reparacion)"
+          >
+            Editar
+          </button>
+          <button
+            *ngIf="
+              selectedReparacion && selectedReparacion.id === reparacion.id
+            "
+            class="btn btn-success btn-sm btn-save"
+            (click)="save()"
+          >
+            Guardar
+          </button>
+          <button
+            *ngIf="
+              selectedReparacion && selectedReparacion.id === reparacion.id
+            "
+            class="btn btn-secondary btn-sm btn-cancel"
+            (click)="cancel()"
+          >
+            Cancelar
+          </button>
+          <button
+            class="btn btn-danger btn-sm btn-cancel"
+            (click)="delete(reparacion.id)"
+          >
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="isAdding">
+        <td></td>
+        <td>
+          <select [(ngModel)]="newReparacion.clienteId" class="form-control">
+            <option *ngFor="let cliente of clientes" [value]="cliente.id">
+              {{ cliente.nombre }} {{ cliente.apellido }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select [(ngModel)]="newReparacion.celularId" class="form-control">
+            <option *ngFor="let celular of celulares" [value]="celular.id">
+              {{ celular.marca }} {{ celular.modelo }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <input [(ngModel)]="newReparacion.problema" class="form-control" />
+        </td>
+        <td>
+          <input [(ngModel)]="newReparacion.estado" class="form-control" />
+        </td>
+        <td>
+          <input
+            [(ngModel)]="newReparacion.fechaIngreso"
+            type="date"
+            class="form-control"
+          />
+        </td>
+        <td>
+          <input
+            [(ngModel)]="newReparacion.fechaEstimadaEntrega"
+            type="date"
+            class="form-control"
+          />
+        </td>
+        <td>
+          <button class="btn btn-success btn-sm" (click)="save()">
+            Guardar
+          </button>
+          <button class="btn btn-secondary btn-sm" (click)="cancel()">
+            Cancelar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

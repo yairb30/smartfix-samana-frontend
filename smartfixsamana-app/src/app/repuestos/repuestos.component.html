@@ -1,0 +1,101 @@
+<div class="container mt-5">
+  <h2>Lista de Repuestos</h2>
+  <button class="btn btn-primary mb-3" (click)="add()">Agregar Repuesto</button>
+  <input type="text" class="form-control mb-3" placeholder="Buscar Repuesto" />
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Color</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let repuesto of repuestos">
+        <td>{{ repuesto.id }}</td>
+        <td *ngIf="!selectedRepuesto || selectedRepuesto.id !== repuesto.id">
+          {{ repuesto.nombre }}
+        </td>
+        <td *ngIf="selectedRepuesto && selectedRepuesto.id === repuesto.id">
+          <input [(ngModel)]="selectedRepuesto.nombre" class="form-control" />
+        </td>
+
+        <td *ngIf="!selectedRepuesto || selectedRepuesto.id !== repuesto.id">
+          {{ repuesto.marca }}
+        </td>
+        <td *ngIf="selectedRepuesto && selectedRepuesto.id === repuesto.id">
+          <input [(ngModel)]="selectedRepuesto.marca" class="form-control" />
+        </td>
+
+        <td *ngIf="!selectedRepuesto || selectedRepuesto.id !== repuesto.id">
+          {{ repuesto.modelo }}
+        </td>
+        <td *ngIf="selectedRepuesto && selectedRepuesto.id === repuesto.id">
+          <input [(ngModel)]="selectedRepuesto.modelo" class="form-control" />
+        </td>
+
+        <td *ngIf="!selectedRepuesto || selectedRepuesto.id !== repuesto.id">
+          {{ repuesto.color }}
+        </td>
+        <td *ngIf="selectedRepuesto && selectedRepuesto.id === repuesto.id">
+          <input [(ngModel)]="selectedRepuesto.color" class="form-control" />
+        </td>
+
+        <td>
+          <button
+            *ngIf="!selectedRepuesto || selectedRepuesto.id !== repuesto.id"
+            class="btn btn-primary btn-sm btn-edit"
+            (click)="edit(repuesto)"
+          >
+            Editar
+          </button>
+          <button
+            *ngIf="selectedRepuesto && selectedRepuesto.id === repuesto.id"
+            class="btn btn-success btn-sm btn-save"
+            (click)="save()"
+          >
+            Guardar
+          </button>
+          <button
+            *ngIf="selectedRepuesto && selectedRepuesto.id === repuesto.id"
+            class="btn btn-secondary btn-sm btn-cancel"
+            (click)="cancel()"
+          >
+            Cancelar
+          </button>
+          <button
+            class="btn btn-danger btn-sm btn-delete"
+            (click)="delete(repuesto.id)"
+          >
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="isAdding">
+        <td></td>
+        <td><input [(ngModel)]="newRepuesto.nombre" class="form-control" /></td>
+        <td>
+          <input [(ngModel)]="newRepuesto.marca" class="form-control" />
+        </td>
+        <td>
+          <input [(ngModel)]="newRepuesto.modelo" class="form-control" />
+        </td>
+        <td><input [(ngModel)]="newRepuesto.color" class="form-control" /></td>
+        <td>
+          <button class="btn btn-success btn-sm btn-save" (click)="save()">
+            Guardar
+          </button>
+          <button
+            class="btn btn-secondary btn-sm btn-cancel"
+            (click)="cancel()"
+          >
+            Cancelar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,101 @@
+<div class="container mt-5">
+  <h2>Lista de Clientes</h2>
+  <button class="btn btn-primary mb-3" (click)="add()">
+    Agregar Cliente
+  </button>
+  <input
+    type="text"
+    class="form-control mb-3"
+    placeholder="Buscar Cliente"
+  />
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cliente of clientes">
+        <td>{{ cliente.id }}</td>
+        <td *ngIf="!selectedCliente || selectedCliente.id !== cliente.id">
+          {{ cliente.nombre }}
+        </td>
+        <td *ngIf="selectedCliente && selectedCliente.id === cliente.id">
+          <input [(ngModel)]="selectedCliente.nombre" class="form-control" />
+        </td>
+
+        <td *ngIf="!selectedCliente || selectedCliente.id !== cliente.id">
+          {{ cliente.apellido }}
+        </td>
+        <td *ngIf="selectedCliente && selectedCliente.id === cliente.id">
+          <input [(ngModel)]="selectedCliente.apellido" class="form-control" />
+        </td>
+
+        <td *ngIf="!selectedCliente || selectedCliente.id !== cliente.id">
+          {{ cliente.telefono }}
+        </td>
+        <td *ngIf="selectedCliente && selectedCliente.id === cliente.id">
+          <input [(ngModel)]="selectedCliente.telefono" class="form-control" />
+        </td>
+
+        <td *ngIf="!selectedCliente || selectedCliente.id !== cliente.id">
+          {{ cliente.email }}
+        </td>
+        <td *ngIf="selectedCliente && selectedCliente.id === cliente.id">
+          <input [(ngModel)]="selectedCliente.email" class="form-control" />
+        </td>
+
+        <td>
+          <button
+            *ngIf="!selectedCliente || selectedCliente.id !== cliente.id"
+            class="btn btn-primary btn-sm btn-edit"
+            (click)="edit(cliente)"
+          >
+            Editar
+          </button>
+          <button
+            *ngIf="selectedCliente && selectedCliente.id === cliente.id"
+            class="btn btn-success btn-sm btn-save"
+            (click)="save()"
+          >
+            Guardar
+          </button>
+          <button
+            *ngIf="selectedCliente && selectedCliente.id === cliente.id"
+            class="btn btn-secondary btn-sm btn-cancel"
+            (click)="cancel()"
+          >
+            Cancelar
+          </button>
+          <button class="btn btn-danger btn-sm btn-delete" (click)="delete(cliente.id)">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="isAdding">
+        <td></td>
+        <td><input [(ngModel)]="newCliente.nombre" class="form-control" /></td>
+        <td>
+          <input [(ngModel)]="newCliente.apellido" class="form-control" />
+        </td>
+        <td>
+          <input [(ngModel)]="newCliente.telefono" class="form-control" />
+        </td>
+        <td><input [(ngModel)]="newCliente.email" class="form-control" /></td>
+        <td>
+          <button class="btn btn-success btn-sm btn-save" (click)="save()">
+            Guardar
+          </button>
+          <button class="btn btn-secondary btn-sm btn-cancel" (click)="cancel()">
+            Cancelar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
