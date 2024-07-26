@@ -4,11 +4,19 @@
   <button class="btn btn-primary mb-3" (click)="add()">
     Agregar Reparación
   </button>
-  <input
-    type="text"
-    class="form-control mb-3"
-    placeholder="Buscar Reparación"
-  />
+  <div class="input-group mb-3">
+    <input
+      type="number"
+      class="form-control"
+      placeholder="Buscar Reparación por ID"
+      [(ngModel)]="searchTerm"
+    />
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" (click)="search()">
+        Buscar
+      </button>
+    </div>
+  </div>
 
   <table class="table table-bordered">
     <thead>

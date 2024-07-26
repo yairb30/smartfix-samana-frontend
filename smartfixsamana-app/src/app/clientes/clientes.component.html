@@ -1,13 +1,17 @@
 <div class="container mt-5">
   <h2>Lista de Clientes</h2>
-  <button class="btn btn-primary mb-3" (click)="add()">
-    Agregar Cliente
-  </button>
-  <input
-    type="text"
-    class="form-control mb-3"
-    placeholder="Buscar Cliente"
-  />
+  <button class="btn btn-primary mb-3" (click)="add()">Agregar Cliente</button>
+  <div class="input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar Cliente por Nombre"
+      [(ngModel)]="searchTerm"
+    />
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" (click)="search()">Buscar</button>
+    </div>
+  </div>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -72,7 +76,10 @@
           >
             Cancelar
           </button>
-          <button class="btn btn-danger btn-sm btn-delete" (click)="delete(cliente.id)">
+          <button
+            class="btn btn-danger btn-sm btn-delete"
+            (click)="delete(cliente.id)"
+          >
             Eliminar
           </button>
         </td>
@@ -91,7 +98,10 @@
           <button class="btn btn-success btn-sm btn-save" (click)="save()">
             Guardar
           </button>
-          <button class="btn btn-secondary btn-sm btn-cancel" (click)="cancel()">
+          <button
+            class="btn btn-secondary btn-sm btn-cancel"
+            (click)="cancel()"
+          >
             Cancelar
           </button>
         </td>

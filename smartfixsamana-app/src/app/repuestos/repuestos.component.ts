@@ -9,13 +9,15 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './repuestos.component.html',
-  styleUrl: './repuestos.component.css'
+  styleUrl: './repuestos.component.css',
 })
 export class RepuestosComponent implements OnInit {
   repuestos: Repuesto[] = [];
   selectedRepuesto: Repuesto | null = null;
   newRepuesto: Repuesto = new Repuesto();
   isAdding: boolean = false;
+  searchType: string = 'marca';
+  searchTerm: string = '';
 
   constructor(private repuestoService: RepuestoService) {}
 
@@ -64,5 +66,20 @@ export class RepuestosComponent implements OnInit {
   add(): void {
     this.isAdding = true;
     this.selectedRepuesto = null;
+  }
+  search(): void {
+    if (this.searchType === 'marca') {
+      this.repuestoService
+        .getRepuestosByMarca(this.searchTerm)
+        .subscribe((data: Repuesto[]) => {
+          this.repuestos = data;
+        });
+    } else if (this.searchType === '') {
+      this.repuestoService
+        .getRepuestosByModelo(this.searchTerm)
+        .subscribe((data: Repuesto[]) => {
+          this.repuestos = data;
+        });
+    }
   }
 }

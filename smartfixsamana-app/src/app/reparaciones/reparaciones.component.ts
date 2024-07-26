@@ -23,6 +23,7 @@ export class ReparacionesComponent implements OnInit {
   selectedReparacion: Reparacion | null = null;
   newReparacion: Reparacion = new Reparacion();
   isAdding: boolean = false;
+  searchTerm: any;
 
   constructor(
     private reparacionService: ReparacionService,
@@ -102,5 +103,14 @@ export class ReparacionesComponent implements OnInit {
   add(): void {
     this.isAdding = true;
     this.selectedReparacion = null;
+  }
+  search(): void {
+    if (this.searchTerm) {
+      this.reparacionService.getReparacionById(this.searchTerm).subscribe((data: Reparacion) => {
+        this.reparaciones = [data];
+      });
+    } else {
+      this.loadReparaciones();
+    }
   }
 }

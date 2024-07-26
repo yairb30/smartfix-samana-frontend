@@ -9,13 +9,15 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './celulares.component.html',
-  styleUrl: './celulares.component.css'
+  styleUrl: './celulares.component.css',
 })
 export class CelularesComponent implements OnInit {
   celulares: Celular[] = [];
   selectedCelular: Celular | null = null;
   newCelular: Celular = new Celular();
   isAdding: boolean = false;
+  searchType: string = 'marca';
+  searchTerm: string = '';
 
   constructor(private celularService: CelularService) {}
 
@@ -65,5 +67,20 @@ export class CelularesComponent implements OnInit {
   add(): void {
     this.isAdding = true;
     this.selectedCelular = null;
+  }
+  search(): void {
+    if (this.searchType === 'marca') {
+      this.celularService
+        .getCelularesByMarca(this.searchTerm)
+        .subscribe((data: Celular[]) => {
+          this.celulares = data;
+        });
+    } else if (this.searchType === '') {
+      this.celularService
+        .getCelularesByModelo(this.searchTerm)
+        .subscribe((data: Celular[]) => {
+          this.celulares = data;
+        });
+    }
   }
 }

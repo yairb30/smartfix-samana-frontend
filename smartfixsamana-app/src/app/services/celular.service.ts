@@ -28,4 +28,12 @@ export class CelularService {
       responseType: 'text',
     });
   }
+  getCelularesByMarca(marca: string): Observable<Celular[]> {
+    return this.http.get<Celular[]>(`${this.celularUrl}/marca?marca=${marca}`);
+  }
+  getCelularesByModelo(modelo: string): Observable<Celular[]> {
+    return this.http.get<Celular[]>(
+      `${this.celularUrl}/modelo?modelo=${modelo}`
+    );
+  }
 }

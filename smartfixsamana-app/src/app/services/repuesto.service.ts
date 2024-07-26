@@ -28,4 +28,14 @@ export class RepuestoService {
       responseType: 'text',
     });
   }
+  getRepuestosByMarca(marca: string): Observable<Repuesto[]> {
+    return this.http.get<Repuesto[]>(
+      `${this.repuestoUrl}/marca?marca=${marca}`
+    );
+  }
+  getRepuestosByModelo(modelo: string): Observable<Repuesto[]> {
+    return this.http.get<Repuesto[]>(
+      `${this.repuestoUrl}/modelo?modelo=${modelo}`
+    );
+  }
 }

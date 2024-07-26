@@ -1,7 +1,27 @@
 <div class="container mt-5">
   <h2>Lista de Repuestos</h2>
   <button class="btn btn-primary mb-3" (click)="add()">Agregar Repuesto</button>
-  <input type="text" class="form-control mb-3" placeholder="Buscar Repuesto" />
+
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <select class="custom-select" [(ngModel)]="searchType">
+        <option value="marca">Buscar por Marca</option>
+        <option value="">Buscar por Modelo</option>
+      </select>
+    </div>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar Repuesto"
+      [(ngModel)]="searchTerm"
+    />
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" (click)="search()">
+        Buscar
+      </button>
+    </div>
+  </div>
+
   <table class="table table-bordered">
     <thead>
       <tr>

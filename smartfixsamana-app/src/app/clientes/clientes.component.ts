@@ -17,6 +17,8 @@ export class ClientesComponent implements OnInit {
   newCliente: Cliente = new Cliente();
   isAdding: boolean = false;
 
+  searchTerm: any;
+
   constructor(private clienteService: ClienteService) {}
 
   ngOnInit(): void {
@@ -65,5 +67,12 @@ export class ClientesComponent implements OnInit {
   add(): void {
     this.isAdding = true;
     this.selectedCliente = null;
+  }
+  search(): void {
+    if (this.searchTerm) {
+      this.clienteService.getClienteByNombre(this.searchTerm).subscribe((data: Cliente[]) => {
+        this.clientes = data;
+      });
+    }
   }
 }

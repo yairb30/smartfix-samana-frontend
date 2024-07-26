@@ -28,4 +28,7 @@ export class ClienteService {
       responseType: 'text',
     });
   }
+  getClienteByNombre(nombre: string): Observable<Cliente[]>{
+   return this.http.get<Cliente[]>(`${this.clienteUrl}/nombre?nombre=${nombre}`)
+  }
 }
