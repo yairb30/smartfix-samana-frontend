@@ -80,11 +80,26 @@ export class ReparacionesComponent implements OnInit {
           this.isAdding = false;
         });
     } else if (this.selectedReparacion) {
+      const updatePayload = {
+        id: this.selectedReparacion.id,
+        clienteId: this.selectedReparacion.clienteId.id,
+        celularId: this.selectedReparacion.celularId.id,
+        problema: this.selectedReparacion.problema,
+        estado: this.selectedReparacion.estado,
+        fechaIngreso: this.selectedReparacion.fechaIngreso,
+        fechaEstimadaEntrega: this.selectedReparacion.fechaEstimadaEntrega,
+      };
+
       this.reparacionService
-        .updateReparacion(this.selectedReparacion.id, this.selectedReparacion)
-        .subscribe(() => {
-          this.loadReparaciones();
-          this.selectedReparacion = null;
+        .updateReparacion(updatePayload.id, updatePayload)
+        .subscribe({
+          next: () => {
+            this.loadReparaciones();
+            this.selectedReparacion = null;
+          },
+          error: (err) => {
+            console.error('Error actualizando la reparación:', err);
+          },
         });
     }
   }
@@ -104,11 +119,14 @@ export class ReparacionesComponent implements OnInit {
     this.isAdding = true;
     this.selectedReparacion = null;
   }
+
   search(): void {
     if (this.searchTerm) {
-      this.reparacionService.getReparacionById(this.searchTerm).subscribe((data: Reparacion) => {
-        this.reparaciones = [data];
-      });
+      this.reparacionService
+        .getReparacionById(this.searchTerm)
+        .subscribe((data: Reparacion) => {
+          this.reparaciones = [data];
+        });
     } else {
       this.loadReparaciones();
     }

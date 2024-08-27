@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Cliente } from '../models/cliente';
@@ -7,7 +7,8 @@ import { Cliente } from '../models/cliente';
   providedIn: 'root',
 })
 export class ClienteService {
-  private clienteUrl: string = 'http://localhost:8082/clientes';
+  private clienteUrl: string = 'http://localhost:8080/clientes';
+
 
   constructor(private http: HttpClient) {}
 

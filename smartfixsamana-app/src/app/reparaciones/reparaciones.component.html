@@ -1,9 +1,9 @@
-<!-- src/app/reparaciones/reparaciones.component.html -->
 <div class="container mt-5">
   <h2>Lista de Reparaciones</h2>
   <button class="btn btn-primary mb-3" (click)="add()">
     Agregar Reparación
   </button>
+
   <div class="input-group mb-3">
     <input
       type="number"
@@ -34,6 +34,8 @@
     <tbody>
       <tr *ngFor="let reparacion of reparaciones">
         <td>{{ reparacion.id }}</td>
+
+        <!-- Cliente -->
         <td
           *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
         >
@@ -48,11 +50,11 @@
           >
             <option *ngFor="let cliente of clientes" [value]="cliente.id">
               {{ cliente.nombre }} {{ cliente.apellido }}
-              {{ cliente.telefono }} {{ cliente.email }}
             </option>
           </select>
         </td>
 
+        <!-- Celular -->
         <td
           *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
         >
@@ -71,6 +73,7 @@
           </select>
         </td>
 
+        <!-- Problema -->
         <td
           *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
         >
@@ -85,6 +88,7 @@
           />
         </td>
 
+        <!-- Estado -->
         <td
           *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
         >
@@ -96,10 +100,11 @@
           <input [(ngModel)]="selectedReparacion.estado" class="form-control" />
         </td>
 
+        <!-- Fecha de Ingreso -->
         <td
           *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
         >
-          {{ reparacion.fechaIngreso }}
+          {{ reparacion.fechaIngreso | date : "yyyy-MM-dd" }}
         </td>
         <td
           *ngIf="selectedReparacion && selectedReparacion.id === reparacion.id"
@@ -111,10 +116,11 @@
           />
         </td>
 
+        <!-- Fecha Estimada de Entrega -->
         <td
           *ngIf="!selectedReparacion || selectedReparacion.id !== reparacion.id"
         >
-          {{ reparacion.fechaEstimadaEntrega }}
+          {{ reparacion.fechaEstimadaEntrega | date : "yyyy-MM-dd" }}
         </td>
         <td
           *ngIf="selectedReparacion && selectedReparacion.id === reparacion.id"
@@ -126,12 +132,13 @@
           />
         </td>
 
+        <!-- Acciones -->
         <td>
           <button
             *ngIf="
               !selectedReparacion || selectedReparacion.id !== reparacion.id
             "
-            class="btn btn-primary btn-sm btn-edit"
+            class="btn btn-primary btn-sm"
             (click)="edit(reparacion)"
           >
             Editar
@@ -140,7 +147,7 @@
             *ngIf="
               selectedReparacion && selectedReparacion.id === reparacion.id
             "
-            class="btn btn-success btn-sm btn-save"
+            class="btn btn-success btn-sm"
             (click)="save()"
           >
             Guardar
@@ -149,19 +156,18 @@
             *ngIf="
               selectedReparacion && selectedReparacion.id === reparacion.id
             "
-            class="btn btn-secondary btn-sm btn-cancel"
+            class="btn btn-secondary btn-sm"
             (click)="cancel()"
           >
             Cancelar
           </button>
-          <button
-            class="btn btn-danger btn-sm btn-cancel"
-            (click)="delete(reparacion.id)"
-          >
+          <button class="btn btn-danger btn-sm" (click)="delete(reparacion.id)">
             Eliminar
           </button>
         </td>
       </tr>
+
+      <!-- Fila de Nueva Reparación -->
       <tr *ngIf="isAdding">
         <td></td>
         <td>

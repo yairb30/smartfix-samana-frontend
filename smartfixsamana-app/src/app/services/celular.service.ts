@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class CelularService {
-  private celularUrl: string = 'http://localhost:8081/celulares';
+  private celularUrl: string = 'http://localhost:8080/celulares';
 
   constructor(private http: HttpClient) {}
 

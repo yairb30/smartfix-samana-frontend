@@ -7,7 +7,7 @@ import { Repuesto } from '../models/repuesto';
   providedIn: 'root',
 })
 export class RepuestoService {
-  private repuestoUrl: string = 'http://localhost:8083/repuestos';
+  private repuestoUrl: string = 'http://localhost:8080/repuestos';
 
   constructor(private http: HttpClient) {}
 
