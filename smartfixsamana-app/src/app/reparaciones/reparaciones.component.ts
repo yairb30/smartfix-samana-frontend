@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Reparacion } from '../models/reparacion';
@@ -55,13 +55,12 @@ export class ReparacionesComponent implements OnInit {
     });
   }
 
-  getCliente(clienteId: number): string {
-    const cliente = this.clientes.find((c) => c.id === clienteId);
+  getCliente(cliente: Cliente): string {
     return cliente ? `${cliente.nombre} ${cliente.apellido}` : '';
   }
 
-  getCelular(celularId: number): string {
-    const celular = this.celulares.find((c) => c.id === celularId);
+  getCelular(celular: Celular): string {
+    
     return celular ? `${celular.marca} ${celular.modelo}` : '';
   }
 
