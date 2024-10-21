@@ -1,5 +1,5 @@
 export class Celular {
-  id: any;
-  marca: any;
-  modelo: any;
+  id!: number;
+  marca!: string;
+  modelo!: string;
 }

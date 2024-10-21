@@ -1,8 +1,13 @@
 <div class="container mt-5">
-  <h2>Lista de Celulares</h2>
-  <button class="btn btn-primary mb-3" (click)="add()">Agregar Celular</button>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="text-primary">Lista de Celulares</h3>
+    <button class="btn btn-primary btn-sm" (click)="add()">
+      Agregar Celular
+    </button>
+  </div>
+
   <div class="input-group mb-3">
-    <div class="input-group-prepend">
+    <div class="input-group-prepend me-2">
       <select class="custom-select" [(ngModel)]="searchType">
         <option value="marca">Buscar por Marca</option>
         <option value="">Buscar por Modelo</option>
@@ -15,86 +20,103 @@
       [(ngModel)]="searchTerm"
     />
     <div class="input-group-append">
-      <button class="btn btn-outline-secondary" (click)="search()">
+      <button class="btn btn-outline-secondary ms-2" (click)="search()">
         Buscar
       </button>
     </div>
   </div>
 
-  <table class="table table-bordered">
+  <table class="table table-hover table-striped">
     <thead>
       <tr>
         <th>ID</th>
         <th>Marca</th>
         <th>Modelo</th>
-        <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let celular of celulares">
+      @for (celular of celulares; track $index) {
+
+      <tr>
         <td>{{ celular.id }}</td>
-        <td *ngIf="!selectedCelular || selectedCelular.id !== celular.id">
-          {{ celular.marca }}
-        </td>
-        <td *ngIf="selectedCelular && selectedCelular.id === celular.id">
-          <input [(ngModel)]="selectedCelular.marca" class="form-control" />
-        </td>
 
-        <td *ngIf="!selectedCelular || selectedCelular.id !== celular.id">
-          {{ celular.modelo }}
-        </td>
-        <td *ngIf="selectedCelular && selectedCelular.id === celular.id">
-          <input [(ngModel)]="selectedCelular.modelo" class="form-control" />
-        </td>
+        @if (!selectedCelular || selectedCelular.id !== celular.id) {
 
-        <td>
-          <button
-            *ngIf="!selectedCelular || selectedCelular.id !== celular.id"
-            class="btn btn-primary btn-sm btn-edit"
-            (click)="edit(celular)"
-          >
-            Editar
-          </button>
-          <button
-            *ngIf="selectedCelular && selectedCelular.id === celular.id"
-            class="btn btn-success btn-sm btn-save"
-            (click)="save()"
-          >
-            Guardar
-          </button>
-          <button
-            *ngIf="selectedCelular && selectedCelular.id === celular.id"
-            class="btn btn-secondary btn-sm btn-cancel"
-            (click)="cancel()"
-          >
-            Cancelar
-          </button>
-          <button
-            class="btn btn-danger btn-sm btn-delete"
-            (click)="delete(celular.id)"
-          >
-            Eliminar
-          </button>
-        </td>
+        <ng-container>
+          <td>{{ celular.marca }}</td>
+          <td>{{ celular.modelo }}</td>
+          <td>
+            <button class="btn btn-info btn-sm me-2" (click)="edit(celular)">
+              Editar
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="delete(celular.id)">
+              Eliminar
+            </button>
+          </td>
+        </ng-container>
+
+        } @if (selectedCelular && selectedCelular.id === celular.id) {
+
+        <ng-container>
+          <td>
+            <input [(ngModel)]="selectedCelular.marca" class="form-control" />
+          </td>
+          <td>
+            <input [(ngModel)]="selectedCelular.modelo" class="form-control" />
+          </td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="save()">
+              Guardar
+            </button>
+            <button class="btn btn-secondary btn-sm" (click)="cancel()">
+              Cancelar
+            </button>
+          </td>
+        </ng-container>
+        }
       </tr>
-      <tr *ngIf="isAdding">
+      } @if (isAdding) {
+      <tr>
         <td></td>
         <td><input [(ngModel)]="newCelular.marca" class="form-control" /></td>
         <td>
           <input [(ngModel)]="newCelular.modelo" class="form-control" />
         </td>
+
         <td>
-          <button class="btn btn-success btn-sm btn-save" (click)="save()">
+          <button class="btn btn-success btn-sm" (click)="save()">
             Guardar
           </button>
-          <button
-            class="btn btn-secondary btn-sm btn-cancel"
-            (click)="cancel()"
-          >
+          <button class="btn btn-secondary btn-sm" (click)="cancel()">
             Cancelar
           </button>
         </td>
       </tr>
+      }
     </tbody>
   </table>
 </div>
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    <!-- Botón de Anterior -->
+    <li class="page-item" [class.disabled]="page === 0">
+      <a class="page-link" (click)="changePage(page - 1)" tabindex="-1"
+        >Anterior</a
+      >
+    </li>
+
+    <!-- Botones numerados -->
+    <li
+      class="page-item"
+      *ngFor="let p of [].constructor(totalPages); let idx = index"
+      [class.active]="idx === page"
+    >
+      <a class="page-link" (click)="changePage(idx)">{{ idx + 1 }}</a>
+    </li>
+
+    <!-- Botón de Siguiente -->
+    <li class="page-item" [class.disabled]="page === totalPages - 1">
+      <a class="page-link" (click)="changePage(page + 1)">Siguiente</a>
+    </li>
+  </ul>
+</nav>

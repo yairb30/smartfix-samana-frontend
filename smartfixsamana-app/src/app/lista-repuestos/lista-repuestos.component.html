@@ -1,0 +1,106 @@
+<div class="container mt-5">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="text-primary">Tipos y detalles de repuestos</h3>
+    <button class="btn btn-primary btn-sm" (click)="add()">
+      Agregar 
+    </button>
+  </div>
+
+  <!-- <div class="input-group mb-3">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Buscar por nombre"
+      [(ngModel)]="searchTerm"
+    />
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" (click)="search()"> 
+          Buscar
+        </button> 
+    </div>
+  </div> -->
+  <table class="table table-hover table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Tipo de repuesto</th>
+        <th>Detalles</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (listR of listaRepuesto; track $index) {
+
+      <tr>
+        <td>{{ listR.id }}</td>
+
+        @if (!selectedListaRepuestos || selectedListaRepuestos.id !== listR.id)
+        {
+
+        <ng-container>
+          <td>{{ listR.nombre }}</td>
+          <td>{{ listR.detalles }}</td>
+
+          <td>
+            <button class="btn btn-info btn-sm me-2" (click)="edit(listR)">
+              Editar
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="delete(listR.id)">
+              Eliminar
+            </button>
+          </td>
+        </ng-container>
+
+        } @if (selectedListaRepuestos && selectedListaRepuestos.id === listR.id)
+        {
+
+        <ng-container>
+          <td>
+            <input
+              [(ngModel)]="selectedListaRepuestos.nombre"
+              class="form-control"
+            />
+          </td>
+          <td>
+            <input
+              [(ngModel)]="selectedListaRepuestos.detalles"
+              class="form-control"
+            />
+          </td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="save()">
+              Guardar
+            </button>
+            <button class="btn btn-secondary btn-sm" (click)="cancel()">
+              Cancelar
+            </button>
+          </td>
+        </ng-container>
+        }
+      </tr>
+      } @if (isAdding) {
+
+      <tr>
+        <td></td>
+        <td>
+          <input [(ngModel)]="newListaRepuestos.nombre" class="form-control" />
+        </td>
+        <td>
+          <input
+            [(ngModel)]="newListaRepuestos.detalles"
+            class="form-control"
+          />
+        </td>
+        <td>
+          <button class="btn btn-success btn-sm" (click)="save()">
+            Guardar
+          </button>
+          <button class="btn btn-secondary btn-sm" (click)="cancel()">
+            Cancelar
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

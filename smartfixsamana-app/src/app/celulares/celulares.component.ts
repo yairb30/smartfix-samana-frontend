@@ -3,6 +3,7 @@ import { Celular } from '../models/celular';
 import { CelularService } from '../services/celular.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-celulares',
@@ -12,12 +13,18 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './celulares.component.css',
 })
 export class CelularesComponent implements OnInit {
-  celulares: Celular[] = [];
+  celulares!: Celular[];
+
+  page: number = 0;
+  totalPages!: number;
+
   selectedCelular: Celular | null = null;
   newCelular: Celular = new Celular();
   isAdding: boolean = false;
   searchType: string = 'marca';
   searchTerm: string = '';
+  selectedCliente: any;
+  clientes: any;
 
   constructor(private celularService: CelularService) {}
 
@@ -26,9 +33,14 @@ export class CelularesComponent implements OnInit {
   }
 
   loadCelulares(): void {
-    this.celularService.getCelulares().subscribe((celulares) => {
-      this.celulares = celulares;
+    this.celularService.getAllPageable(this.page).subscribe((response) => {
+      this.celulares = response.content;
+      this.totalPages = response.totalPages;
     });
+  }
+  changePage(page: number): void {
+    this.page = page;
+    this.loadCelulares();
   }
 
   edit(celular: Celular): void {
@@ -42,6 +54,11 @@ export class CelularesComponent implements OnInit {
         this.loadCelulares();
         this.newCelular = new Celular();
         this.isAdding = false;
+        Swal.fire({
+          title: 'Nuevo celular creado!',
+          text: 'Celular creado con exito!',
+          icon: 'success',
+        });
       });
     } else if (this.selectedCelular) {
       this.celularService
@@ -49,13 +66,35 @@ export class CelularesComponent implements OnInit {
         .subscribe(() => {
           this.loadCelulares();
           this.selectedCelular = null;
+          Swal.fire({
+            title: 'Actualizado',
+            text: 'Celular editado con exito!',
+            icon: 'success',
+          });
         });
     }
   }
 
   delete(celularId: number): void {
-    this.celularService.deleteCelular(celularId).subscribe(() => {
-      this.loadCelulares();
+    Swal.fire({
+      title: 'Seguro que quieres eliminar el celular?',
+      text: 'El celular será eliminado del sistema!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.celularService.deleteCelular(celularId).subscribe(() => {
+          this.loadCelulares();
+        });
+        Swal.fire({
+          title: 'Eliminado!',
+          text: 'Celular eliminado con exito',
+          icon: 'success',
+        });
+      }
     });
   }
 

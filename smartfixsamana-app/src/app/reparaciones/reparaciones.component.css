@@ -6,6 +6,15 @@
   .table {
     width: 100%;
   }
+  .page-link {
+    cursor: pointer;
+  }
+  
+  .page-link:hover {
+    background-color: #f8f9fa; /* Añadir un color de fondo suave al hacer hover */
+    cursor: pointer;
+  }
+  
 
 
   

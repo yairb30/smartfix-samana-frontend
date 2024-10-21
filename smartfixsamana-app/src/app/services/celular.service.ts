@@ -14,14 +14,17 @@ export class CelularService {
   getCelulares(): Observable<Celular[]> {
     return this.http.get<Celular[]>(this.celularUrl);
   }
+  getAllPageable(page: number): Observable<any> {
+    return this.http.get<any>(`${this.celularUrl}/page/${page}`);
+  }
   getCelularById(id: number): Observable<Celular> {
     return this.http.get<Celular>(`${this.celularUrl}/${id}`);
   }
   createCelular(celular: Celular): Observable<Object> {
     return this.http.post(`${this.celularUrl}`, celular);
   }
-  updateCelular(id: number, value: Celular): Observable<object> {
-    return this.http.put(`${this.celularUrl}/${id}`, value);
+  updateCelular(id: number, celular: Celular): Observable<object> {
+    return this.http.put(`${this.celularUrl}/${id}`, celular);
   }
   deleteCelular(id: number): Observable<any> {
     return this.http.delete(`${this.celularUrl}/${id}`, {

@@ -1,6 +1,10 @@
 <div class="container mt-5">
-  <h2>Lista de Clientes</h2>
-  <button class="btn btn-primary mb-3" (click)="add()">Agregar Cliente</button>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h3 class="text-primary">Lista de Clientes</h3>
+    <button class="btn btn-primary btn-sm" (click)="add()">
+      Agregar Cliente
+    </button>
+  </div>
   <div class="input-group mb-3">
     <input
       type="text"
@@ -9,10 +13,12 @@
       [(ngModel)]="searchTerm"
     />
     <div class="input-group-append">
-      <button class="btn btn-outline-secondary" (click)="search()">Buscar</button>
+      <button class="btn btn-outline-secondary ms-2" (click)="search()">
+        Buscar
+      </button>
     </div>
   </div>
-  <table class="table table-bordered">
+  <table class="table table-hover table-striped">
     <thead>
       <tr>
         <th>ID</th>
@@ -24,67 +30,64 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let cliente of clientes">
+      @for (cliente of clientes; track $index) {
+
+      <tr>
         <td>{{ cliente.id }}</td>
-        <td *ngIf="!selectedCliente || selectedCliente.id !== cliente.id">
-          {{ cliente.nombre }}
-        </td>
-        <td *ngIf="selectedCliente && selectedCliente.id === cliente.id">
-          <input [(ngModel)]="selectedCliente.nombre" class="form-control" />
-        </td>
 
-        <td *ngIf="!selectedCliente || selectedCliente.id !== cliente.id">
-          {{ cliente.apellido }}
-        </td>
-        <td *ngIf="selectedCliente && selectedCliente.id === cliente.id">
-          <input [(ngModel)]="selectedCliente.apellido" class="form-control" />
-        </td>
+        @if (!selectedCliente || selectedCliente.id !== cliente.id) {
 
-        <td *ngIf="!selectedCliente || selectedCliente.id !== cliente.id">
-          {{ cliente.telefono }}
-        </td>
-        <td *ngIf="selectedCliente && selectedCliente.id === cliente.id">
-          <input [(ngModel)]="selectedCliente.telefono" class="form-control" />
-        </td>
+        <ng-container>
+          <td>{{ cliente.nombre }}</td>
+          <td>{{ cliente.apellido }}</td>
+          <td>{{ cliente.telefono }}</td>
+          <td>{{ cliente.email }}</td>
 
-        <td *ngIf="!selectedCliente || selectedCliente.id !== cliente.id">
-          {{ cliente.email }}
-        </td>
-        <td *ngIf="selectedCliente && selectedCliente.id === cliente.id">
-          <input [(ngModel)]="selectedCliente.email" class="form-control" />
-        </td>
+          <td>
+            <button class="btn btn-info btn-sm me-2" (click)="edit(cliente)">
+              Editar
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="delete(cliente.id)">
+              Eliminar
+            </button>
+          </td>
+        </ng-container>
 
-        <td>
-          <button
-            *ngIf="!selectedCliente || selectedCliente.id !== cliente.id"
-            class="btn btn-primary btn-sm btn-edit"
-            (click)="edit(cliente)"
-          >
-            Editar
-          </button>
-          <button
-            *ngIf="selectedCliente && selectedCliente.id === cliente.id"
-            class="btn btn-success btn-sm btn-save"
-            (click)="save()"
-          >
-            Guardar
-          </button>
-          <button
-            *ngIf="selectedCliente && selectedCliente.id === cliente.id"
-            class="btn btn-secondary btn-sm btn-cancel"
-            (click)="cancel()"
-          >
-            Cancelar
-          </button>
-          <button
-            class="btn btn-danger btn-sm btn-delete"
-            (click)="delete(cliente.id)"
-          >
-            Eliminar
-          </button>
-        </td>
+        } @if (selectedCliente && selectedCliente.id === cliente.id) {
+
+        <ng-container>
+          <td>
+            <input [(ngModel)]="selectedCliente.nombre" class="form-control" />
+          </td>
+          <td>
+            <input
+              [(ngModel)]="selectedCliente.apellido"
+              class="form-control"
+            />
+          </td>
+          <td>
+            <input
+              [(ngModel)]="selectedCliente.telefono"
+              class="form-control"
+            />
+          </td>
+          <td>
+            <input [(ngModel)]="selectedCliente.email" class="form-control" />
+          </td>
+          <td>
+            <button class="btn btn-success btn-sm" (click)="save()">
+              Guardar
+            </button>
+            <button class="btn btn-secondary btn-sm" (click)="cancel()">
+              Cancelar
+            </button>
+          </td>
+        </ng-container>
+        }
       </tr>
-      <tr *ngIf="isAdding">
+      } @if (isAdding) {
+
+      <tr>
         <td></td>
         <td><input [(ngModel)]="newCliente.nombre" class="form-control" /></td>
         <td>
@@ -95,17 +98,39 @@
         </td>
         <td><input [(ngModel)]="newCliente.email" class="form-control" /></td>
         <td>
-          <button class="btn btn-success btn-sm btn-save" (click)="save()">
+          <button class="btn btn-success btn-sm" (click)="save()">
             Guardar
           </button>
-          <button
-            class="btn btn-secondary btn-sm btn-cancel"
-            (click)="cancel()"
-          >
+          <button class="btn btn-secondary btn-sm" (click)="cancel()">
             Cancelar
           </button>
         </td>
       </tr>
+      }
     </tbody>
   </table>
 </div>
+<nav aria-label="Page navigation">
+  <ul class="pagination justify-content-center">
+    <!-- Botón de Anterior -->
+    <li class="page-item" [class.disabled]="page === 0">
+      <a class="page-link" (click)="changePage(page - 1)" tabindex="-1"
+        >Anterior</a
+      >
+    </li>
+
+    <!-- Botones numerados -->
+    <li
+      class="page-item"
+      *ngFor="let p of [].constructor(totalPages); let idx = index"
+      [class.active]="idx === page"
+    >
+      <a class="page-link" (click)="changePage(idx)">{{ idx + 1 }}</a>
+    </li>
+
+    <!-- Botón de Siguiente -->
+    <li class="page-item" [class.disabled]="page === totalPages - 1">
+      <a class="page-link" (click)="changePage(page + 1)">Siguiente</a>
+    </li>
+  </ul>
+</nav>

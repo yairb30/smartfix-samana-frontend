@@ -7,16 +7,12 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ListaRepuestosComponent } from './lista-repuestos/lista-repuestos.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: '/dashboard', pathMatch: 'full'},
-    {path: 'dashboard', component: DashboardComponent},
-    {path: 'clientes', component: ClientesComponent},
-    {path: 'celulares', component: CelularesComponent},
-    {path: 'reparaciones', component: ReparacionesComponent},
-    {path: 'repuestos', component: RepuestosComponent},
-    {path: 'lista-repuestos', component: ListaRepuestosComponent}
-    
-
+  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'clientes', component: ClientesComponent },
+  { path: 'celulares', component: CelularesComponent },
+  { path: 'reparaciones', component: ReparacionesComponent },
+  { path: 'repuestos', component: RepuestosComponent },
+  { path: 'lista-repuestos', component: ListaRepuestosComponent },
 ];
-export const routingProviders = [
-    provideRouter(routes)
-];
+export const routingProviders = [provideRouter(routes)];

@@ -27,6 +27,9 @@
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="/repuestos">Repuestos</a>
         </li>
+      </ul>
+      <!-- Aquí movemos la parte de perfil a la derecha usando ms-auto -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown" routerLinkActive="active">
           <a
             class="nav-link dropdown-toggle"
@@ -43,14 +46,14 @@
             aria-labelledby="perfilDropdown"
           >
             <li>
-              <a class="dropdown-item" href="#" (click)="onLogin()"
-                >Iniciar sesión</a
-              >
+              <a class="dropdown-item" href="#" (click)="onLogin()">
+                Iniciar sesión
+              </a>
             </li>
             <li>
-              <a class="dropdown-item" href="#" (click)="onLogout()"
-                >Cerrar sesión</a
-              >
+              <a class="dropdown-item" href="#" (click)="onLogout()">
+                Cerrar sesión
+              </a>
             </li>
           </ul>
         </li>

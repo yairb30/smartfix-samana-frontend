@@ -9,11 +9,13 @@ import { Observable } from 'rxjs';
 export class ReparacionService {
   private reparacionUrl: string = 'http://localhost:8080/reparaciones';
 
-
   constructor(private http: HttpClient) {}
 
   getReparaciones(): Observable<Reparacion[]> {
     return this.http.get<Reparacion[]>(this.reparacionUrl);
+  }
+  getAllPageable(page: number): Observable<any> {
+    return this.http.get<any>(`${this.reparacionUrl}/page/${page}`);
   }
   getReparacionById(id: number): Observable<Reparacion> {
     return this.http.get<Reparacion>(`${this.reparacionUrl}/${id}`);
@@ -21,11 +23,25 @@ export class ReparacionService {
   createReparacion(reparacion: Reparacion): Observable<Object> {
     return this.http.post(`${this.reparacionUrl}`, reparacion);
   }
-  updateReparacion(id: number, value: Reparacion): Observable<object> {
-    return this.http.put(`${this.reparacionUrl}/${id}`, value
-);
+  updateReparacion(id: number, reparacion: Reparacion): Observable<object> {
+    return this.http.put(`${this.reparacionUrl}/${id}`, reparacion);
   }
   deleteReparacion(id: number): Observable<any> {
-    return this.http.delete(`${this.reparacionUrl}/${id}`);
+    return this.http.delete(`${this.reparacionUrl}/${id}`, {
+      responseType: 'text',
+    });
+  }
+  // Buscar reparacion por nombre o apellido del cliente
+  getClienteByNombreApellido(keyword: string): Observable<Reparacion[]> {
+    return this.http.get<Reparacion[]>(
+      `${this.reparacionUrl}/search/cliente?keyword=${keyword}`
+    );
+  }
+
+  // Buscar repuestos por marca o modelo del celular
+  getReparacionByCelular(keyword: string): Observable<Reparacion[]> {
+    return this.http.get<Reparacion[]>(
+      `${this.reparacionUrl}/search/celular?keyword=${keyword}`
+    );
   }
 }

@@ -1,7 +1,8 @@
 export class Cliente {
-  id: any;
-  nombre: any;
-  apellido: any;
-  telefono: any;
-  email: any;
+  id!: number;
+  nombre!: string;
+  apellido!: string;
+  telefono!: string;
+  email!: string;
+  eligeCliente: string = 'Elige un cliente';
 }

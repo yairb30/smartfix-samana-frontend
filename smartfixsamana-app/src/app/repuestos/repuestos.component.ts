@@ -1,35 +1,78 @@
 import { Component, OnInit } from '@angular/core';
-import { Repuesto } from '../models/repuesto';
-import { RepuestoService } from '../services/repuesto.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Repuesto } from '../models/repuesto';
+import { ListaRepuestos } from '../models/lista-repuestos';
+import { Celular } from '../models/celular';
+import { RepuestoService } from '../services/repuesto.service';
+import { ListaRepuestosService } from '../services/lista-repuestos.service';
+import { CelularService } from '../services/celular.service';
+import { ListaRepuestosComponent } from "../lista-repuestos/lista-repuestos.component";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-repuestos',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ListaRepuestosComponent],
   templateUrl: './repuestos.component.html',
   styleUrl: './repuestos.component.css',
 })
 export class RepuestosComponent implements OnInit {
-  repuestos: Repuesto[] = [];
+  repuestos!: Repuesto[];
+  listaRepuestos!: ListaRepuestos[];
+  celulares!: Celular[];
+
+  page: number = 0;
+  totalPages!: number;
+
   selectedRepuesto: Repuesto | null = null;
   newRepuesto: Repuesto = new Repuesto();
   isAdding: boolean = false;
-  searchType: string = 'marca';
-  searchTerm: string = '';
+  keyword: string = '';
 
-  constructor(private repuestoService: RepuestoService) {}
+  constructor(
+    private repuestoService: RepuestoService,
+    private listRService: ListaRepuestosService,
+    private celularService: CelularService
+  ) {}
 
   ngOnInit(): void {
     this.loadRepuestos();
+    this.loadListaRepuestos();
+    this.loadCelulares();
   }
 
   loadRepuestos(): void {
-    this.repuestoService.getRepustos().subscribe((repuestos) => {
-      this.repuestos = repuestos;
+    this.repuestoService.getAllPageable(this.page).subscribe(response => {
+      this.repuestos = response.content;
+      this.totalPages = response.totalPages;
     });
   }
+  changePage(page: number): void{
+    this.page = page;
+    this.loadRepuestos();
+  }
+
+  loadListaRepuestos(): void {
+    this.listRService.getListRepuestos().subscribe((data) => {
+      this.listaRepuestos = data;
+    });
+  }
+
+  loadCelulares(): void {
+    this.celularService.getCelulares().subscribe((celulares) => {
+      this.celulares = celulares;
+    });
+  }
+
+  getListR(listR: ListaRepuestos): string {
+    return listR ? `${listR.nombre} ${listR.detalles}` : '';
+  }
+
+  getCelular(celular: Celular): string {
+    return celular ? `${celular.marca} ${celular.modelo}` : '';
+  }
+
   edit(repuesto: Repuesto): void {
     this.selectedRepuesto = { ...repuesto };
     this.isAdding = false;
@@ -41,20 +84,57 @@ export class RepuestosComponent implements OnInit {
         this.loadRepuestos();
         this.newRepuesto = new Repuesto();
         this.isAdding = false;
+        Swal.fire({
+          title: 'Nuevo repuesto creado!',
+          text: 'Repuesto creado con exito!',
+          icon: 'success'
+        });
       });
     } else if (this.selectedRepuesto) {
+      const updatePayload = {
+        id: this.selectedRepuesto.id,
+        elegirRepuesto: this.selectedRepuesto.elegirRepuesto,
+        elegirCelular: this.selectedRepuesto.elegirCelular,
+      };
       this.repuestoService
-        .updateRepuesto(this.selectedRepuesto.id, this.selectedRepuesto)
-        .subscribe(() => {
-          this.loadRepuestos();
-          this.selectedRepuesto = null;
+        .updateRepuesto(updatePayload.id, updatePayload)
+        .subscribe({
+          next: () => {
+            this.loadRepuestos();
+            this.selectedRepuesto = null;
+            Swal.fire({
+              title: 'Actualizado',
+              text: 'Repuesto editado con exito!',
+              icon: 'success',
+            });
+          },
+          error: (err) => {
+            console.error('Error actualizando el repuesto:', err);
+          },
         });
     }
   }
 
-  delete(repuestoId: number): void {
-    this.repuestoService.deleteRepuesto(repuestoId).subscribe(() => {
-      this.loadRepuestos();
+  delete(idRepuesto: number): void {
+    Swal.fire({
+      title: 'Seguro que quieres eliminar el repuesto?',
+      text: 'El repuesto será eliminado del sistema!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.repuestoService.deleteRepuesto(idRepuesto).subscribe(() => {
+        this.loadRepuestos();
+        });
+        Swal.fire({
+          title: "Eliminado!",
+          text: "Repuesto eliminado con exito",
+          icon: "success"
+        })
+      }
     });
   }
 
@@ -67,19 +147,28 @@ export class RepuestosComponent implements OnInit {
     this.isAdding = true;
     this.selectedRepuesto = null;
   }
-  search(): void {
-    if (this.searchType === 'marca') {
-      this.repuestoService
-        .getRepuestosByMarca(this.searchTerm)
-        .subscribe((data: Repuesto[]) => {
-          this.repuestos = data;
-        });
-    } else if (this.searchType === '') {
-      this.repuestoService
-        .getRepuestosByModelo(this.searchTerm)
-        .subscribe((data: Repuesto[]) => {
-          this.repuestos = data;
-        });
-    }
+ // Método para buscar repuestos por nombre o celular
+ searchRepuestos(): void {
+  if (this.keyword.trim() !== '') {
+    this.repuestoService.getRepuestosByRepuesto(this.keyword).subscribe(
+      (data) => {
+        this.repuestos = data;
+      },
+      (error) => {
+        console.error('Error al buscar por repuesto', error);
+      }
+    );
+
+    this.repuestoService.getRepuestosByCelular(this.keyword).subscribe(
+      (data) => {
+        this.repuestos = [...this.repuestos, ...data]; // Combinar resultados
+      },
+      (error) => {
+        console.error('Error al buscar por celular', error);
+      }
+    );
+  } else {
+    this.loadRepuestos(); // Si no hay keyword, obtener todos los repuestos
   }
+}
 }

@@ -1,10 +1,13 @@
+import { Celular } from "./celular";
+import { Cliente } from "./cliente";
+
 export class Reparacion {
 
-    id: any;
-    clienteId: any;
-    celularId: any;
-    problema: any;
-    estado: any;
-    fechaIngreso: any;
-    fechaEstimadaEntrega: any;
+    id!: number;
+    clienteId!: Cliente;
+    celularId!: Celular;
+    problema!: string;
+    estado!: string;
+    fechaIngreso!: Date;
+    fechaEstimadaEntrega!: Date;
 }

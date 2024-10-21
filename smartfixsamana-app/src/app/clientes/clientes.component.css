@@ -1,3 +1,14 @@
 .container {
   margin-top: 100px !important;
 }
+
+
+.page-link {
+  cursor: pointer;
+}
+
+.page-link:hover {
+  background-color: #f8f9fa; /* Añadir un color de fondo suave al hacer hover */
+  cursor: pointer;
+}
+

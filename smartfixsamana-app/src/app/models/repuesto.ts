@@ -1,7 +1,8 @@
+import { Celular } from "./celular";
+import { ListaRepuestos } from "./lista-repuestos";
+
 export class Repuesto {
-  id: any;
-  nombre: any;
-  marca: any;
-  modelo: any;
-  color: any;
+  id!: number;
+  elegirRepuesto!: ListaRepuestos;
+  elegirCelular!: Celular;
 }
