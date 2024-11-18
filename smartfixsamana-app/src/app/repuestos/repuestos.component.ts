@@ -28,7 +28,7 @@ export class RepuestosComponent implements OnInit {
   selectedRepuesto: Repuesto | null = null;
   newRepuesto: Repuesto = new Repuesto();
   isAdding: boolean = false;
-  keyword: string = '';
+  searchRepuesto: string = '';
 
   constructor(
     private repuestoService: RepuestoService,
@@ -149,8 +149,8 @@ export class RepuestosComponent implements OnInit {
   }
  // Método para buscar repuestos por nombre o celular
  searchRepuestos(): void {
-  if (this.keyword.trim() !== '') {
-    this.repuestoService.getRepuestosByRepuesto(this.keyword).subscribe(
+  if (this.searchRepuesto.trim() !== '') {
+    this.repuestoService.getRepuesto(this.searchRepuesto).subscribe(
       (data) => {
         this.repuestos = data;
       },
@@ -159,7 +159,7 @@ export class RepuestosComponent implements OnInit {
       }
     );
 
-    this.repuestoService.getRepuestosByCelular(this.keyword).subscribe(
+    this.repuestoService.getRepuestoByCelular(this.searchRepuesto).subscribe(
       (data) => {
         this.repuestos = [...this.repuestos, ...data]; // Combinar resultados
       },
@@ -168,7 +168,7 @@ export class RepuestosComponent implements OnInit {
       }
     );
   } else {
-    this.loadRepuestos(); // Si no hay keyword, obtener todos los repuestos
+    this.loadRepuestos(); // Si no hay busqueda especifica, obtener todos los repuestos
   }
 }
 }

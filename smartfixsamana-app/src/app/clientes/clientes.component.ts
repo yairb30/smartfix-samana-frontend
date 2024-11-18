@@ -4,12 +4,12 @@ import { ClienteService } from '../services/cliente.service';
 import { Cliente } from '../models/cliente';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { RouterOutlet } from '@angular/router';
+
 
 @Component({
   selector: 'app-clientes',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, FormsModule],
+  imports: [CommonModule,  FormsModule],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css',
 })
@@ -23,7 +23,7 @@ export class ClientesComponent implements OnInit {
   newCliente: Cliente = new Cliente();
   isAdding: boolean = false;
 
-  searchTerm: any;
+  searchCliente: any;
 
   constructor(private clienteService: ClienteService) {}
 
@@ -107,10 +107,10 @@ export class ClientesComponent implements OnInit {
     this.isAdding = true;
     this.selectedCliente = null;
   }
-  search(): void {
-    if (this.searchTerm) {
+  searchClientes(): void {
+    if (this.searchCliente) {
       this.clienteService
-        .getClienteByNombre(this.searchTerm)
+        .getClienteByNombre(this.searchCliente)
         .subscribe((data: Cliente[]) => {
           this.clientes = data;
         });

@@ -28,7 +28,7 @@ export class ReparacionesComponent implements OnInit {
   selectedReparacion: Reparacion | null = null;
   newReparacion: Reparacion = new Reparacion();
   isAdding: boolean = false;
-  keyword: string = '';
+  searchReparacion: string = '';
 
   constructor(
     private reparacionService: ReparacionService,
@@ -154,8 +154,8 @@ export class ReparacionesComponent implements OnInit {
 
   // Método para buscar reparaciones por cliente o celular
   searchReparaciones(): void {
-    if (this.keyword.trim() !== '') {
-      this.reparacionService.getClienteByNombreApellido(this.keyword).subscribe(
+    if (this.searchReparacion.trim() !== '') {
+      this.reparacionService.getClienteByNombre(this.searchReparacion).subscribe(
         (data) => {
           this.reparaciones = data;
         },
@@ -164,7 +164,7 @@ export class ReparacionesComponent implements OnInit {
         }
       );
 
-      this.reparacionService.getReparacionByCelular(this.keyword).subscribe(
+      this.reparacionService.getReparacionByCelular(this.searchReparacion).subscribe(
         (data) => {
           this.reparaciones = [...this.reparaciones, ...data]; // Combinar resultados
         },
@@ -173,7 +173,7 @@ export class ReparacionesComponent implements OnInit {
         }
       );
     } else {
-      this.loadReparaciones(); // Si no hay keyword, obtener todos los repuestos
+      this.loadReparaciones(); // Si no hay busqueda especifica, obtener todos los repuestos
     }
   }
 }

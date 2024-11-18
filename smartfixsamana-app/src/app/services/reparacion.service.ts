@@ -32,16 +32,16 @@ export class ReparacionService {
     });
   }
   // Buscar reparacion por nombre o apellido del cliente
-  getClienteByNombreApellido(keyword: string): Observable<Reparacion[]> {
+  getClienteByNombre(cliente: string): Observable<Reparacion[]> {
     return this.http.get<Reparacion[]>(
-      `${this.reparacionUrl}/search/cliente?keyword=${keyword}`
+      `${this.reparacionUrl}/search/cliente?cliente=${cliente}`
     );
   }
 
   // Buscar repuestos por marca o modelo del celular
-  getReparacionByCelular(keyword: string): Observable<Reparacion[]> {
+  getReparacionByCelular(celular: string): Observable<Reparacion[]> {
     return this.http.get<Reparacion[]>(
-      `${this.reparacionUrl}/search/celular?keyword=${keyword}`
+      `${this.reparacionUrl}/search/celular?celular=${celular}`
     );
   }
 }

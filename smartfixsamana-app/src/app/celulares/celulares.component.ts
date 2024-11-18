@@ -107,7 +107,7 @@ export class CelularesComponent implements OnInit {
     this.isAdding = true;
     this.selectedCelular = null;
   }
-  search(): void {
+  searchCelulares(): void {
     if (this.searchType === 'marca') {
       this.celularService
         .getCelularesByMarca(this.searchTerm)

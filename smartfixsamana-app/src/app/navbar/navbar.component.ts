@@ -5,10 +5,10 @@ import { RouterModule } from '@angular/router';
   selector: 'app-header',
   standalone: true,
   imports: [RouterModule],
-  templateUrl: './header.component.html',
-  styleUrl: './header.component.css',
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css',
 })
-export class HeaderComponent {
+export class NavbarComponent {
 
   onLogin(): void {
     // Lógica para iniciar sesión

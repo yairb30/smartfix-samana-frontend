@@ -43,17 +43,17 @@ export class RepuestoService {
     });
   }
 
-  // Buscar repuestos por nombre o detalles del repuesto
-  getRepuestosByRepuesto(keyword: string): Observable<Repuesto[]> {
+  // Buscar repuestos por nombre del repuesto
+  getRepuesto(repuesto: string): Observable<Repuesto[]> {
     return this.http.get<Repuesto[]>(
-      `${this.repuestoUrl}/search/repuesto?keyword=${keyword}`
+      `${this.repuestoUrl}/search/repuesto?repuesto=${repuesto}`
     );
   }
 
   // Buscar repuestos por marca o modelo del celular
-  getRepuestosByCelular(keyword: string): Observable<Repuesto[]> {
+  getRepuestoByCelular(celular: string): Observable<Repuesto[]> {
     return this.http.get<Repuesto[]>(
-      `${this.repuestoUrl}/search/celular?keyword=${keyword}`
+      `${this.repuestoUrl}/search/celular?celular=${celular}`
     );
   }
 }
