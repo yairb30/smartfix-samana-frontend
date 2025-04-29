@@ -14,10 +14,6 @@ export class ClienteService {
   getClientes(): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(this.clienteUrl);
   }
-
-  getAllPageable(page: number): Observable<any>{
-    return this.http.get<any>(`${this.clienteUrl}/page/${page}`);
-  }
   getClienteById(id: number): Observable<Cliente> {
     return this.http.get<Cliente>(`${this.clienteUrl}/${id}`);
   }

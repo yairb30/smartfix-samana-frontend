@@ -2,17 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ListaRepuestos } from '../models/lista-repuestos';
-import { ListaRepuestosService } from '../services/lista-repuestos.service';
+import { CatalogoRepuestosService } from '../services/catalogo-repuestos.service';
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'lista-repuestos',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './lista-repuestos.component.html',
-  styleUrl: './lista-repuestos.component.css'
+  templateUrl: './catalogo-repuestos.component.html',
+  styleUrl: './catalogo-repuestos.component.css'
 })
-export class ListaRepuestosComponent {
+export class CatalogoRepuestosComponent {
 
   listaRepuesto!: ListaRepuestos[];
   selectedListaRepuestos: ListaRepuestos | null = null;
@@ -22,7 +22,7 @@ export class ListaRepuestosComponent {
 
   searchTerm: any;
 
-  constructor(private listaRservice: ListaRepuestosService) {}
+  constructor(private listaRservice: CatalogoRepuestosService) {}
 
   ngOnInit(): void {
     this.loadListaRepuestos();

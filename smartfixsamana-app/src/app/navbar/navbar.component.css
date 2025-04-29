@@ -1,4 +1,4 @@
-.navbar-brand {
+/* .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -56,4 +56,109 @@
   width: 100%;
   z-index: 1000;
 }
+ */
+
+ .mat-toolbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.app-title {
+  margin-right: 16px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 16px; /* Espaciado entre los botones */
+}
+
+button[mat-button] {
+  text-transform: capitalize; /* Mantiene el texto en estilo natural */
+}
+
+.nav-links a {
+  text-decoration: none; /* Elimina la línea de subrayado */
+  color: white; /* Asegura que el texto sea visible */
+  font-size: 15px; /* Ajusta el tamaño del texto */
+  margin: 0 8px; /* Añade espacio entre enlaces */
+  padding: 0; /* Quita cualquier padding extra */
+  line-height: 32px; /* Asegura alineación vertical con la barra */
+}
+
+.nav-links a:hover {
+  color: #ddd; /* Cambia el color al pasar el ratón */
+}
+
+/* Ocultar enlaces en pantallas pequeñas */
+.nav-links {
+  display: flex;
+  gap: 16px;
+}
+
+/* Estilos para el botón de perfil */
+.perfil-button {
+  border: none; /* Hace el botón de perfil redondo */
+  background-color: transparent; 
+  width: 37px !important;/* Tamaño del botón */
+  height: 40px !important; /* Tamaño del botón */
+  display: flex; /* Asegura que el ícono esté centrado */
+  align-items: center; /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal */
+  background-color: transparent; /* Sin fondo adicional */
+  padding: 0;
+}
+
+  .perfil-button .mat-icon {
+  font-size: 40px; /* Ajusta el tamaño del ícono */
+}
+
+.mat-icon{
+  width: 70px;
+  height: 40px;
+}
+.mat-toolbar {
+  font-weight: normal;
+}
+/* Estilos para el botón del menú hamburguesa */
+  .hamburguesa-menu {
+  background-color: transparent; /* Sin fondo */
+  border: 0; /* No redondear el botón del menú hamburguesa */
+  width: 30px; /* Tamaño adecuado */
+  height: 40px; /* Tamaño adecuado */
+}
+button.hamburguesa-menu .mat-icon {
+  font-size: 37px; /* Ajusta el tamaño del ícono */
+}
+.mobile-menu {
+  display: none !important; /* Oculto por defecto */
+  margin-right: 16px; /* Añade un espacio entre el menú hamburguesa y el ícono del perfil */
+  border-radius: 0; /* No redondear el botón del menú hamburguesa */
+  width: 40px; /* Tamaño adecuado */
+  height: 40px; /* Tamaño adecuado */
+}
+.gbNav {
+  background: linear-gradient(45deg, #125f48, #4c8d88) !important; /* Degradado en ángulo de 45° */
+  color: white !important; /* Cambiar el color del texto para que contraste */
+  border: none !important; /* Elimina bordes si es necesario */
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* Ocultar enlaces principales en pantallas pequeñas */
+  }
+
+  .mobile-menu {
+      display: none !important;/* Mostrar menú hamburguesa en pantallas pequeñas */
+  }
+  button.mat-mdc-menu-trigger {
+      display: block !important; /* Asegura que el botón de perfil se muestre */
+    }
+
+  .app-title {
+    flex-grow: 1; /* Asegurar que el título ocupe espacio necesario */
+  }
+}
+
+
 

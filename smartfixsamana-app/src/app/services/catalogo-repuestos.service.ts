@@ -6,7 +6,7 @@ import { ListaRepuestos } from '../models/lista-repuestos';
 @Injectable({
   providedIn: 'root',
 })
-export class ListaRepuestosService {
+export class CatalogoRepuestosService {
   private lis_repuestosURL = 'http://localhost:8080/lis_repuestos';
   constructor(private http: HttpClient) {}
 

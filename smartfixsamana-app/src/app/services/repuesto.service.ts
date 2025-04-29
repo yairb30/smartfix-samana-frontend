@@ -2,8 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Repuesto } from '../models/repuesto';
-import { ListaRepuestos } from '../models/lista-repuestos';
-import { Celular } from '../models/celular';
 
 @Injectable({
   providedIn: 'root',

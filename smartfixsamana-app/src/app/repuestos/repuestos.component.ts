@@ -5,15 +5,15 @@ import { Repuesto } from '../models/repuesto';
 import { ListaRepuestos } from '../models/lista-repuestos';
 import { Celular } from '../models/celular';
 import { RepuestoService } from '../services/repuesto.service';
-import { ListaRepuestosService } from '../services/lista-repuestos.service';
+import { CatalogoRepuestosService } from '../services/catalogo-repuestos.service';
 import { CelularService } from '../services/celular.service';
-import { ListaRepuestosComponent } from "../lista-repuestos/lista-repuestos.component";
+import { CatalogoRepuestosComponent } from "../catalogo-repuestos/catalogo-repuestos.component";
 import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-repuestos',
   standalone: true,
-  imports: [CommonModule, FormsModule, ListaRepuestosComponent],
+  imports: [CommonModule, FormsModule, CatalogoRepuestosComponent],
   templateUrl: './repuestos.component.html',
   styleUrl: './repuestos.component.css',
 })
@@ -32,7 +32,7 @@ export class RepuestosComponent implements OnInit {
 
   constructor(
     private repuestoService: RepuestoService,
-    private listRService: ListaRepuestosService,
+    private listRService: CatalogoRepuestosService,
     private celularService: CelularService
   ) {}
 

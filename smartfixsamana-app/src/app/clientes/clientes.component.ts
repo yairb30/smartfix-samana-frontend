@@ -15,9 +15,6 @@ import Swal from 'sweetalert2';
 })
 export class ClientesComponent implements OnInit {
   clientes!: Cliente[];
-  //paginacion
-  page: number = 0; // Pagina actual
-  totalPages!: number; // Total de paginas
 
   selectedCliente: Cliente | null = null;
   newCliente: Cliente = new Cliente();
@@ -32,15 +29,9 @@ export class ClientesComponent implements OnInit {
   }
 
   loadClientes(): void {
-    this.clienteService.getAllPageable(this.page).subscribe((response) => {
-      this.clientes = response.content; // Lista de clientes
-      this.totalPages = response.totalPages; // Total de paginas
+    this.clienteService.getClientes().subscribe((response) => {
+      this.clientes = response;
     });
-  }
-  changePage(page: number): void {
-      this.page = page;
-      this.loadClientes();
-    
   }
 
   edit(cliente: Cliente): void {

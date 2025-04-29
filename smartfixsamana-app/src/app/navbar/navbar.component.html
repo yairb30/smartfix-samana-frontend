@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/dashboard">Smartfix Samaná</a>
     <button
@@ -28,7 +28,6 @@
           <a class="nav-link" routerLink="/repuestos">Repuestos</a>
         </li>
       </ul>
-      <!-- Aquí movemos la parte de perfil a la derecha usando ms-auto -->
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown" routerLinkActive="active">
           <a
@@ -60,4 +59,63 @@
       </ul>
     </div>
   </div>
-</nav>
+</nav> -->
+<mat-toolbar class="mat-elevation-z4 gbNav">
+  <mat-toolbar-row>
+    <!-- Título del navbar -->
+    <span class="app-title">Smartfix Samaná</span>
+
+    <!-- Botón de menú hamburguesa para móviles -->
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="menu"
+      class="mobile-menu hamburguesa-menu"
+      aria-label="Abrir menú de navegación"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item routerLink="/clientes" routerLinkActive="active-link">
+        Clientes
+      </button>
+      <button mat-menu-item routerLink="/celulares" routerLinkActive="active-link">
+        Celulares
+      </button>
+      <button mat-menu-item routerLink="/reparaciones" routerLinkActive="active-link">
+        Reparaciones
+      </button>
+      <button mat-menu-item routerLink="/repuestos" routerLinkActive="active-link">
+        Repuestos
+      </button>
+    </mat-menu>
+
+    <!-- Enlaces principales para pantallas grandes -->
+    <div class="nav-links">
+      <a routerLink="/clientes" routerLinkActive="active-link">Clientes</a>
+      <a routerLink="/celulares" routerLinkActive="active-link">Celulares</a>
+      <a routerLink="/reparaciones" routerLinkActive="active-link">Reparaciones</a>
+      <a routerLink="/repuestos" routerLinkActive="active-link">Repuestos</a>
+    </div>
+
+    <!-- Dropdown del perfil -->
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="perfilMenu"
+      class="perfil-button"
+      aria-label="Abrir menú de perfil"
+    >
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <mat-menu #perfilMenu="matMenu">
+      <button mat-menu-item (click)="onLogin()">
+        <mat-icon>login</mat-icon>
+        <span>Iniciar sesión</span>
+      </button>
+      <button mat-menu-item (click)="onLogout()">
+        <mat-icon>logout</mat-icon>
+        <span>Cerrar sesión</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>
+
